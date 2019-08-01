@@ -40,6 +40,7 @@ call plug#end()
 "---Add shortcut to [r]un python----------------------------------------------------------------
 ":noremap <leader>r :w !python<Enter>
 :noremap <C-b> :w !python<Enter>
+:inoremap <C-b> <Esc>:w !python<Enter>
 
 
 "---Copy Paste Undo like MS Windows-------------------------------------------------------------
@@ -56,9 +57,11 @@ call plug#end()
 
 "---Mode colours--------------------------------------------------------------------------------
 "change the background colour to indicate current mode
-:au InsertEnter * hi Normal term=reverse ctermbg=black guibg=NONE "
-:au InsertLeave * hi Normal term=NONE    ctermbg=darkmagenta    guibg=NONE " 
+:au InsertEnter * highlight Normal term=reverse ctermbg=black guibg=black guifg=white"
+:au InsertLeave * highlight Normal term=NONE    ctermbg=darkmagenta    guibg=#101050 guifg=white" 
 
+:highlight Normal guibg=#101050 guifg=white"
+:syntax enable 
 "---Plugin Help Tags----------------------------------------------------------------------------
 " Put these lines at the very end of your vimrc file.
 
