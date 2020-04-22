@@ -2,19 +2,38 @@
 
 call plug#begin('~\AppData\Local\nvim\plugged')
 Plug 'vim-scripts/ctrlp.vim'            "ctrlP is a fuzzy finder
-"Plug 'morhetz/gruvbox'                 "gruvbox is a colorscheme
+Plug 'morhetz/gruvbox'                 "gruvbox is a colorscheme
 Plug 'w0rp/ale'				"ALE is asynchronous linting - checking syntax
 Plug 'scrooloose/nerdtree'		"NERDTree is a 'gui' style directory explorer
-Plug 'Xuyuanp/nerdtree-git-plugin'     "adds git status info to the directories
+Plug 'Xuyuanp/nerdtree-git-plugin'      "adds git status info to the directories
+Plug 'tpope/vim-surround'               "add quotes or parenthesis around a selection
+Plug 'tpope/vim-repeat'                 "repeat tpope plugins using period .
+Plug 'severin-lemaignan/vim-minimap'    "adds a minimap like Sublime
+Plug 'klen/python-mode'
 "Plug 'ycm-core/YouCompleteMe'          "tab autocomplete - requires a local
 "server running in the background
 " Initialize plugin system
 call plug#end()
 
-""---General Settings----------------------------------------------------------------------------
-:set encoding=utf-8
+"---General Settings----------------------------------------------------------------------------
 ":set showcmd
+:set background=dark
+:let g:python3_host_prog='C:\Program Files\Python37\python'
+:set termencoding=utf-8
+:set encoding=utf-8
+:set fileencoding=utf-8
+:set title
+augroup dirchange
+    autocmd!
+    autocmd DirChanged * let &titlestring=v:event['cwd']
+augroup END
 
+:set foldmethod=syntax
+"---Window movement-----------------------------------------------------------------------------
+:nnoremap <C-j> <C-w>j
+:nnoremap <C-k> <C-w>k
+:nnoremap <C-h> <C-w>h
+:nnoremap <C-l> <C-w>l
 "---Plugin Settings-----------------------------------------------------------------------------
 :let g:ale_sign_column_always = 1     "always show signs in ALE
 :let NERDTreeShowHidden=1             "always show hidden files and folders in NERDTree
@@ -57,8 +76,8 @@ call plug#end()
 
 "---Mode colours--------------------------------------------------------------------------------
 "change the background colour to indicate current mode
-:au InsertEnter * highlight Normal term=reverse ctermbg=black guibg=black guifg=white"
-:au InsertLeave * highlight Normal term=NONE    ctermbg=darkmagenta    guibg=#101050 guifg=white" 
+:au InsertEnter * highlight Normal term=reverse ctermbg=black          guifg=white guibg=black " guibg=black
+:au InsertLeave * highlight Normal term=NONE    ctermbg=darkmagenta    guifg=white guibg=#101050
 
 :highlight Normal guibg=#101050 guifg=white"
 :syntax enable 
