@@ -43,31 +43,40 @@ Plug 'junegunn/fzf.vim'
 call plug#end()
 " }}}
 
-"---Gneral Settings-------------------------------------------------------------------{{{
+"---General Settings-------------------------------------------------------------------{{{
 " Quickly reload this configuration file nm: source my vimrc file 
 :nnoremap <Leader>sv :so $MYVIMRC<CR>
 
 " open vertical split that is 90 characters wide, roughly half a screen
 " Quickly edit this configuration file nm: edit my vimrc file
-":nnoremap <Leader>ev :90vsplit $MYVIMRC/../.vim/config.vim<CR>
-:nnoremap <Leader>ev :tabedit $MYVIMRC/../.vim/config.vim<CR>
+:nnoremap <Leader>ev :90vsplit $MYVIMRC/../.vim/config.vim<CR>
 " Quickly edit vim notes file nm: edit notes
 :nnoremap <Leader>en :90vsplit $VIMNOTES<CR>
 
-" toggle all folds in the file
-:nnoremap <Leader>Z :set foldlevel=99<CR>
+" toggle [a]ll folds in the file
+:nnoremap <leader>a :call FoldLevelToggle()<cr>
+
+function! FoldLevelToggle()
+    if &foldlevel
+        set foldlevel=0
+    else
+        set foldlevel=4
+    endif
+endfunction
 
 "map <Leader>z toggle the current foldlevel (z not f because of other fold cmds)
 nmap <Leader>z za
 
 " use Emacs end of line (overrides: Scroll window [count] line downwards)
 :nnoremap <C-e> $
-":nnoremap <C-e> internal-end-of-line 
 :inoremap <C-e> <Esc>$a
 :vnoremap <C-e> $
 ":set showcmd
 :set background=dark
 :let g:python3_host_prog='C:\Program Files\Python37\python'
+:let g:pymode_options_colorcolumn = 0   
+:filetype plugin on
+:filetype indent on
 :set termencoding=utf-8
 :set encoding=utf-8
 :set fileencoding=utf-8
@@ -106,7 +115,6 @@ nnoremap gV `[v`]
 :let g:NERDTreeShowHidden=1		"always show hidden files and folders in NERDTree
 :let g:NERDTreeToggle = '<leader>n'	"<leader>n toggles NERDTree, preserves ctrl+N emacs functionality
 :let g:ctrlp_show_hidden=1		"always show hidden files and folders in ctrlP
-:let g:ctrlp_map = '<leader>p'          "<leader>p starts ctrlp, preserves ctrl+P emacs functionality
 :let g:pymode_rope = 0			"stop pymode rope from hanging Neovim
 :let g:pymode_rope_lookup_project = 0	"stop pymode rope from hanging Neovim
 :let g:syntastic_python_pylint_post_args="--max-line-length=120" "change the pylinting line limit
@@ -190,9 +198,9 @@ nmap <Leader>' :FFMarks<CR>
 "change the background color to indicate current mode
 "
 :let $NVIM_TUI_ENABLE_TRUE_COLOR=1
-:au InsertEnter * highlight Normal term=reverse guibg=black guifg=white guibg=black "guibg=black
+:au InsertEnter * highlight Normal term=reverse guifg=#10105 guifg=white guibg=black 
 ":au InsertEnter * highlight Normal term=reverse guibg=#8B008B      guifg=white guibg=black " guibg=black
-:au InsertLeave * highlight Normal term=NONE    guibg=darkmagenta    guifg=white guibg=#101050
+:au InsertLeave * highlight Normal term=NONE    guifg=darkmagenta    guifg=white guibg=#101050
 
 :highlight Normal guibg=#101050 guifg=white"
 :syntax enable
