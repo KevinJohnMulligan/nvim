@@ -1,3 +1,4 @@
+"             _
 "      __   _(_)_ __ ___  _ __ ___
 "      \ \ / / | '_ ` _ \| '__/ __|
 "       \ V /| | | | | | | | | (__
@@ -103,6 +104,8 @@ nnoremap <leader>l <C-w>l
 " window movement and managment }}}
 
 "---Plugin Settings--------------------------------------------------------------------{{{
+let g:gruvbox_italic = get(g:, 'gruvbox_italic', 0)
+colorscheme gruvbox
 "always show signs in ALE
 let g:ale_sign_column_always = 1
 "always show hidden files and folders in NERDTree
@@ -198,13 +201,16 @@ noremap <C-z> u
 "
 let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 set t_Co=256
+set background=dark
+au InsertEnter * highlight Normal guibg=#101030    
+au InsertLeave * highlight Normal guibg=#1d2021  
 
-"set starting colorscheme
-highlight Normal guibg=#101050
-"highlight Folded guibg=#222222 guifg=white
-highlight Folded guibg=#007777 
-au InsertEnter * highlight Normal guifg=#DDDDFF guibg=#101030
-au InsertLeave * highlight Normal guifg=#FFFFFF guibg=#101050
+""set starting colorscheme
+"highlight Normal guibg=#101050 guifg=white
+""highlight Folded guibg=#222222 guifg=white
+"highlight Folded guibg=#007777 guifg=white
+"au InsertEnter * highlight Normal guifg=#DDDDFF guibg=#101030
+"au InsertLeave * highlight Normal guifg=#FFFFFF guibg=#101050
 
 syntax enable
 "mode colors }}}
