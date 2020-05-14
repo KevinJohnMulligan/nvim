@@ -3,12 +3,11 @@
 "       \ V /| | | | | | | | | (__
 "        \_/ |_|_| |_| |_|_|  \___|
 
-"       TODO rewrite all comments in the imperative.
-"       	'if this line is active it will (comment)'
+"       comments are to read as 'if this line is active it will (comment)'
 
 "---Plugins----------------------------------------------------------------------------{{{
 
-"To install these plugins type :PlugInstall
+"Note: To install these plugins type :PlugInstall
 call plug#begin('~\AppData\Local\nvim\plugged')
 "repeat tpope plugins using period .
 Plug 'tpope/vim-repeat'                 
@@ -18,7 +17,7 @@ Plug 'tpope/vim-surround'
 Plug 'tpope/vim-commentary'             
 "20 bindings providing useful functionality
 Plug 'tpope/vim-unimpaired'             
-"uses a search, select (by typing),and jump methodology
+"use a search, select (by typing),and jump methodology
 Plug 'easymotion/vim-easymotion'        
 "gruvbox is a colorscheme
 Plug 'morhetz/gruvbox'			
@@ -26,11 +25,11 @@ Plug 'morhetz/gruvbox'
 Plug 'w0rp/ale'				
 "NERDTree is a 'gui' style directory explorer
 Plug 'scrooloose/nerdtree'		
-"adds git status info to the directories
+"add git status info to the directories
 Plug 'Xuyuanp/nerdtree-git-plugin'      
 "<F5> gives a graphical tree of undo history 
 Plug 'mbbill/undotree'                  
-"adds a minimap like Sublime
+"add a minimap like Sublime
 "Plug 'severin-lemaignan/vim-minimap'   
 Plug 'klen/python-mode'
 "tab autocomplete - requires a local server running in the background
@@ -44,16 +43,16 @@ call plug#end()
 " }}}
 
 "---General Settings-------------------------------------------------------------------{{{
-" Quickly reload this configuration file nm: source my vimrc file 
+"quickly reload this configuration file nm: source my vimrc file 
 nnoremap <Leader>sv :so $MYVIMRC<CR>
 
-" open vertical split that is 90 characters wide, roughly half a screen
-" Quickly edit this configuration file nm: edit my vimrc file
+"open vertical split that is 90 characters wide, roughly half a screen
+"quickly edit this configuration file nm: edit my vimrc file
 nnoremap <Leader>ev :90vsplit $MYVIMRC/../.vim/config.vim<CR>
-" Quickly edit vim notes file nm: edit notes
+"quickly edit vim notes file nm: edit notes
 nnoremap <Leader>en :90vsplit $VIMNOTES<CR>
 
-" toggle [a]ll folds in the file
+"toggle [a]ll folds in the file
 nnoremap <leader>a :call FoldLevelToggle()<cr>
 
 function! FoldLevelToggle()
@@ -67,14 +66,14 @@ endfunction
 "map <Leader>z toggle the current foldlevel (z not f because of other fold cmds)
 nmap <Leader>z za
 
-" use Emacs end of line (overrides: Scroll window [count] line downwards)
+"use Emacs end of line (overrides: Scroll window [count] line downwards)
 nnoremap <C-e> $
 inoremap <C-e> <Esc>$a
 vnoremap <C-e> $
-":set showcmd
+
 set background=dark
-set termencoding=utf-8
 set encoding=utf-8
+set termencoding=utf-8
 set fileencoding=utf-8
 set title
 augroup dirchange
@@ -84,9 +83,9 @@ augroup END
 
 set foldmethod=syntax
 
-" highlight last inserted text
+"highlight last inserted text
 nnoremap gV `[v`]
-" general settings }}}
+"general settings }}}
 
 "---Set the Leader key-----------------------------------------------------------------{{{
 map <SPACE> <leader>
@@ -103,16 +102,19 @@ nnoremap <leader>l <C-w>l
 " window movement and managment }}}
 
 "---Plugin Settings--------------------------------------------------------------------{{{
-let g:ale_sign_column_always = 1	"always show signs in ALE
-let g:NERDTreeShowHidden=1		"always show hidden files and folders in NERDTree
-let g:NERDTreeToggle = '<leader>n'	"<leader>n toggles NERDTree, preserves ctrl+N emacs functionality
+"always show signs in ALE
+let g:ale_sign_column_always = 1
+"always show hidden files and folders in NERDTree
+let g:NERDTreeShowHidden=1
+"<leader>n toggles NERDTree, preserves ctrl+N emacs functionality
+let g:NERDTreeToggle = '<leader>n'
 let g:python3_host_prog='C:\Program Files\Python37\python'
 let g:pymode_options_colorcolumn = 0   
 filetype plugin on
 filetype indent on
 let g:pymode_rope = 0			"stop pymode rope from hanging Neovim
 let g:pymode_rope_lookup_project = 0	"stop pymode rope from hanging Neovim
-let g:syntastic_python_pylint_post_args="--max-line-length=120" "change the pylinting line limit
+"let g:syntastic_python_pylint_post_args="--max-line-length=120" "change the pylinting line limit
 autocmd FileType python set colorcolumn=120
 nnoremap <F5> :UndotreeToggle<cr>
 if has("persistent_undo")
@@ -125,7 +127,7 @@ endif
 "prefix all Fzf commands scroll through them in the suggestion list
 " Z is too difficult to type so just FF for 'fuzzy finder'
 let g:fzf_command_prefix = 'FF'
-" 'FF' must now be added to the front of all FZF commands
+" 'FF' must be added to the front of all FZF commands
 
 "<Leader>f() find ()
 "map <Leader>fg to search for git tracked files, and <Leader>f to search all files*.
@@ -153,17 +155,18 @@ nmap <Leader>' :FFMarks<CR>
 " plugins }}}
 
 "---Line numbers-----------------------------------------------------------------------{{{
-" turn hybrid line numbers on
+"turn hybrid line numbers on
 :set number relativenumber
 
-"Relative line numbers are helpful when moving around in normal mode, but absolute line numbers are more suited for insert mode.
+"relative line numbers are helpful when moving around in normal mode
+"absolute line numbers are more suited for insert mode.
 
 augroup numbertoggle
 autocmd!
 autocmd BufEnter,FocusGained,InsertLeave * set relativenumber
 autocmd BufLeave,FocusLost,InsertEnter   * set norelativenumber
 augroup END
-" line numbers }}}
+"line numbers }}}
 
 "---Add shortcut to run python-------------------------------------------------------{{{
 ":noremap <leader>r :w !python<Enter>
@@ -187,7 +190,7 @@ vnoremap <C-v> "*p
 "normal vim behaviour for ctrl+z would be to put the process in the background
 "and show the terminal that it was run from
 noremap <C-z> u
-" MS Windows compatibility}}}
+"MS Windows compatibility}}}
 
 "---Mode colours-----------------------------------------------------------------------{{{
 "change the background color to indicate current mode
@@ -199,18 +202,18 @@ au InsertLeave * highlight Normal term=NONE    guifg=darkmagenta    guifg=white 
 
 highlight Normal guibg=#101050 guifg=white"
 syntax enable
-" mode colors }}}
+"mode colors }}}
 
 "---Plugin Help Tags--------------------------------------------------------------------{{{
-" Put these lines at the very end of your vimrc file.
+"Put these lines at the very end of your vimrc file.
 
-" Load all plugins now.
-" Plugins need to be added to runtimepath before helptags can be generated.
+"Load all plugins now.
+"Plugins need to be added to runtimepath before helptags can be generated.
 packloadall
-" Load all of the helptags now, after plugins have been loaded.
-" All messages and errors will be ignored.
+"Load all of the helptags now, after plugins have been loaded.
+"All messages and errors will be ignored.
 silent! helptags ALL
-" Plugin help tags}}}
+"Plugin help tags}}}
 
 set modelines=1
 " vim:foldmethod=marker:foldlevel=0
