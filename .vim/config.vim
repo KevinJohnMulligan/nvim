@@ -64,7 +64,8 @@ function! FoldLevelToggle()
 endfunction
 
 "map <Leader>z toggle the current foldlevel (z not f because of other fold cmds)
-nmap <Leader>z za
+"nmap <Leader>z za
+nmap <Tab> za
 
 "use Emacs end of line (overrides: Scroll window [count] line downwards)
 nnoremap <C-e> $
@@ -196,11 +197,15 @@ noremap <C-z> u
 "change the background color to indicate current mode
 "
 let $NVIM_TUI_ENABLE_TRUE_COLOR=1
-au InsertEnter * highlight Normal term=reverse guifg=#10105 guifg=white guibg=black 
-":au InsertEnter * highlight Normal term=reverse guibg=#8B008B      guifg=white guibg=black " guibg=black
-au InsertLeave * highlight Normal term=NONE    guifg=darkmagenta    guifg=white guibg=#101050
+set t_Co=256
 
-highlight Normal guibg=#101050 guifg=white"
+"set starting colorscheme
+highlight Normal guibg=#101050
+"highlight Folded guibg=#222222 guifg=white
+highlight Folded guibg=#007777 
+au InsertEnter * highlight Normal guifg=#DDDDFF guibg=#101030
+au InsertLeave * highlight Normal guifg=#FFFFFF guibg=#101050
+
 syntax enable
 "mode colors }}}
 
