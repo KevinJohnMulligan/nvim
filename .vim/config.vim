@@ -45,16 +45,16 @@ call plug#end()
 
 "---General Settings-------------------------------------------------------------------{{{
 " Quickly reload this configuration file nm: source my vimrc file 
-:nnoremap <Leader>sv :so $MYVIMRC<CR>
+nnoremap <Leader>sv :so $MYVIMRC<CR>
 
 " open vertical split that is 90 characters wide, roughly half a screen
 " Quickly edit this configuration file nm: edit my vimrc file
-:nnoremap <Leader>ev :90vsplit $MYVIMRC/../.vim/config.vim<CR>
+nnoremap <Leader>ev :90vsplit $MYVIMRC/../.vim/config.vim<CR>
 " Quickly edit vim notes file nm: edit notes
-:nnoremap <Leader>en :90vsplit $VIMNOTES<CR>
+nnoremap <Leader>en :90vsplit $VIMNOTES<CR>
 
 " toggle [a]ll folds in the file
-:nnoremap <leader>a :call FoldLevelToggle()<cr>
+nnoremap <leader>a :call FoldLevelToggle()<cr>
 
 function! FoldLevelToggle()
     if &foldlevel
@@ -68,58 +68,53 @@ endfunction
 nmap <Leader>z za
 
 " use Emacs end of line (overrides: Scroll window [count] line downwards)
-:nnoremap <C-e> $
-:inoremap <C-e> <Esc>$a
-:vnoremap <C-e> $
+nnoremap <C-e> $
+inoremap <C-e> <Esc>$a
+vnoremap <C-e> $
 ":set showcmd
-:set background=dark
-:let g:python3_host_prog='C:\Program Files\Python37\python'
-:let g:pymode_options_colorcolumn = 0   
-:filetype plugin on
-:filetype indent on
-:set termencoding=utf-8
-:set encoding=utf-8
-:set fileencoding=utf-8
-:set title
+set background=dark
+set termencoding=utf-8
+set encoding=utf-8
+set fileencoding=utf-8
+set title
 augroup dirchange
     autocmd!
     autocmd DirChanged * let &titlestring=v:event['cwd']
 augroup END
 
-:set foldmethod=syntax
+set foldmethod=syntax
 
 " highlight last inserted text
 nnoremap gV `[v`]
 " general settings }}}
 
 "---Set the Leader key-----------------------------------------------------------------{{{
-:map <SPACE> <leader>
+map <SPACE> <leader>
 " set the leader }}}
 
 "---Window movement and management-----------------------------------------------------{{{
-:set splitbelow
-:set splitright
-:nnoremap <leader>j <C-w>j
-:nnoremap <leader>k <C-w>k
-:nnoremap <leader>h <C-w>h
-:nnoremap <leader>l <C-w>l
+set splitbelow
+set splitright
+nnoremap <leader>j <C-w>j
+nnoremap <leader>k <C-w>k
+nnoremap <leader>h <C-w>h
+nnoremap <leader>l <C-w>l
 
-:hi TabLineFill guifg=LightGreen guibg=DarkGreen
-:hi TabLine guifg=Blue guibg=Yellow
-:hi TabLineSel guifg=Red guibg=Yellow
-:hi Title guifg=LightBlue guibg=Magenta
 " window movement and managment }}}
 
 "---Plugin Settings--------------------------------------------------------------------{{{
-:let g:ale_sign_column_always = 1	"always show signs in ALE
-:let g:NERDTreeShowHidden=1		"always show hidden files and folders in NERDTree
-:let g:NERDTreeToggle = '<leader>n'	"<leader>n toggles NERDTree, preserves ctrl+N emacs functionality
-:let g:ctrlp_show_hidden=1		"always show hidden files and folders in ctrlP
-:let g:pymode_rope = 0			"stop pymode rope from hanging Neovim
-:let g:pymode_rope_lookup_project = 0	"stop pymode rope from hanging Neovim
-:let g:syntastic_python_pylint_post_args="--max-line-length=120" "change the pylinting line limit
-:autocmd FileType python set colorcolumn=120
-:nnoremap <F5> :UndotreeToggle<cr>
+let g:ale_sign_column_always = 1	"always show signs in ALE
+let g:NERDTreeShowHidden=1		"always show hidden files and folders in NERDTree
+let g:NERDTreeToggle = '<leader>n'	"<leader>n toggles NERDTree, preserves ctrl+N emacs functionality
+let g:python3_host_prog='C:\Program Files\Python37\python'
+let g:pymode_options_colorcolumn = 0   
+filetype plugin on
+filetype indent on
+let g:pymode_rope = 0			"stop pymode rope from hanging Neovim
+let g:pymode_rope_lookup_project = 0	"stop pymode rope from hanging Neovim
+let g:syntastic_python_pylint_post_args="--max-line-length=120" "change the pylinting line limit
+autocmd FileType python set colorcolumn=120
+nnoremap <F5> :UndotreeToggle<cr>
 if has("persistent_undo")
     set undodir=$HOME."/.undodir"
     set undofile
@@ -163,47 +158,47 @@ nmap <Leader>' :FFMarks<CR>
 
 "Relative line numbers are helpful when moving around in normal mode, but absolute line numbers are more suited for insert mode.
 
-:augroup numbertoggle
-:autocmd!
-:autocmd BufEnter,FocusGained,InsertLeave * set relativenumber
-:autocmd BufLeave,FocusLost,InsertEnter   * set norelativenumber
-:augroup END
+augroup numbertoggle
+autocmd!
+autocmd BufEnter,FocusGained,InsertLeave * set relativenumber
+autocmd BufLeave,FocusLost,InsertEnter   * set norelativenumber
+augroup END
 " line numbers }}}
 
 "---Add shortcut to run python-------------------------------------------------------{{{
 ":noremap <leader>r :w !python<Enter>
-:noremap <C-b> :w !python<Enter>
-:inoremap <C-b> <Esc>:w !python<Enter>
+noremap <C-b> :w !python<Enter>
+inoremap <C-b> <Esc>:w !python<Enter>
 " binding for python}}}
 
 "---Copy Paste Undo like MS Windows----------------------------------------------------{{{
 "paste from clipboard in insert mode then leave insert mode
-: inoremap <C-v> <esc>"*p
+inoremap <C-v> <esc>"*p
 "paste from clipboard in normal mode
-: nnoremap <C-v> "*p
+nnoremap <C-v> "*p
 "paste from clipboard in command mode
-: cnoremap <C-v> <C-r>*
+cnoremap <C-v> <C-r>*
 
 "copy to windows clipboard in visual mode
-: vnoremap <C-c> "*y
-: vnoremap <C-v> "*p
+vnoremap <C-c> "*y
+vnoremap <C-v> "*p
 
 "make ctrl+z undo an action rather than freezing the console indefinitely for nvim
 "normal vim behaviour for ctrl+z would be to put the process in the background
 "and show the terminal that it was run from
-: noremap <C-z> u
+noremap <C-z> u
 " MS Windows compatibility}}}
 
 "---Mode colours-----------------------------------------------------------------------{{{
 "change the background color to indicate current mode
 "
-:let $NVIM_TUI_ENABLE_TRUE_COLOR=1
-:au InsertEnter * highlight Normal term=reverse guifg=#10105 guifg=white guibg=black 
+let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+au InsertEnter * highlight Normal term=reverse guifg=#10105 guifg=white guibg=black 
 ":au InsertEnter * highlight Normal term=reverse guibg=#8B008B      guifg=white guibg=black " guibg=black
-:au InsertLeave * highlight Normal term=NONE    guifg=darkmagenta    guifg=white guibg=#101050
+au InsertLeave * highlight Normal term=NONE    guifg=darkmagenta    guifg=white guibg=#101050
 
-:highlight Normal guibg=#101050 guifg=white"
-:syntax enable
+highlight Normal guibg=#101050 guifg=white"
+syntax enable
 " mode colors }}}
 
 "---Plugin Help Tags--------------------------------------------------------------------{{{
@@ -217,5 +212,5 @@ packloadall
 silent! helptags ALL
 " Plugin help tags}}}
 
-:set modelines=1
+set modelines=1
 " vim:foldmethod=marker:foldlevel=0
