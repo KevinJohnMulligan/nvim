@@ -6,7 +6,7 @@
 
 "       comments are to read as 'if this line is active it will (comment)'
 
-"---Plugins----------------------------------------------------------------------------{{{
+"---Plugins-----------------------------------------------------------------{{{
 
 "Note: To install these plugins type :PlugInstall
 call plug#begin('~\AppData\Local\nvim\plugged')
@@ -38,12 +38,13 @@ Plug 'klen/python-mode'
 "Plug 'ycm-core/YouCompleteMe'          
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
-
+"automatically open popup suggestion list as oposed to Ctrl-p to invoke list
+Plug 'vim-scripts/AutoComplPop'
 " Initialize plugin system
 call plug#end()
 " }}}
 
-"---General Settings-------------------------------------------------------------------{{{
+"---General Settings--------------------------------------------------------{{{
 "quickly reload this configuration file nm: source my vimrc file 
 nnoremap <Leader>sv :so $MYVIMRC<CR>
 
@@ -73,6 +74,9 @@ nnoremap <C-e> $
 inoremap <C-e> <Esc>$a
 vnoremap <C-e> $
 
+"Enter turns off the highlight of the previous search
+nnoremap <CR> :noh<CR><CR>:<backspace>
+
 set background=dark
 set encoding=utf-8
 set termencoding=utf-8
@@ -83,27 +87,48 @@ augroup dirchange
     autocmd DirChanged * let &titlestring=v:event['cwd']
 augroup END
 
+"create fold using syntax cues
 set foldmethod=syntax
+"show a line in column 81 as a visual reminder to keep lines less than 80 char
+set colorcolumn=81
 
-"highlight last inserted text
+"gV highlights last inserted text
 nnoremap gV `[v`]
-"general settings }}}
 
-"---Set the Leader key-----------------------------------------------------------------{{{
+"autocomplete settings------------------------------------------------------{{{
+"look up words from the English dictionary upon pressing Ctrl-p
+set complete+=kspell
+
+"menuone shows even when there is only one selection
+"longest inserts longest common match automatically
+set completeopt=menuone,longest
+"don't show the selection and list in the status bar
+"set menu=c
+
+"navigate the complete menu using tab, down and up arrows eq to Ctrl-p/Ctrl-n
+inoremap <expr> <Tab> pumvisible() ? "<C-n>" : "<Tab>"
+inoremap <expr> <Down> pumvisible() ? "<C-n>" : "<Down>"
+inoremap <expr> <Up> pumvisible() ? "<C-p>" : "<Up>"
+inoremap <expr> <S-tab> pumvisible() ? "<C-n>" : "<S-Tab>"
+
+"when in insert, tab opens the autocomplete menu (standard is Ctrl-p)
+inoremap <Tab> <C-p> 
+
+"select the complete menu items like Ctrl-y would
+inoremap <expr> <Right> pumvisible() ? "<C-y>" : "<Right>"
+inoremap <expr> <CR> pumvisible() ? "<C-y>" : "<CR>"
+
+"cancel the complete menu like Ctrl-e would
+inoremap <expr> <Left> pumvisible() ? "<C-y>" : "<Left>"
+"end autocomplete settings }}}
+
+"end general settings }}}
+
+"---Set the Leader key-------------------------------------------------------{{{
 map <SPACE> <leader>
-" set the leader }}}
+" end set the leader }}}
 
-"---Window movement and management-----------------------------------------------------{{{
-set splitbelow
-set splitright
-nnoremap <leader>j <C-w>j
-nnoremap <leader>k <C-w>k
-nnoremap <leader>h <C-w>h
-nnoremap <leader>l <C-w>l
-
-" window movement and managment }}}
-
-"---Plugin Settings--------------------------------------------------------------------{{{
+"---Plugin Settings----------------------------------------------------------{{{
 let g:gruvbox_italic = get(g:, 'gruvbox_italic', 0)
 colorscheme gruvbox
 "always show signs in ALE
@@ -158,7 +183,17 @@ nmap <Leader>' :FFMarks<CR>
 " fzf.vim }}}
 " plugins }}}
 
-"---Line numbers-----------------------------------------------------------------------{{{
+"---Window movement and management-------------------------------------------{{{
+set splitbelow
+set splitright
+nnoremap <leader>j <C-w>j
+nnoremap <leader>k <C-w>k
+nnoremap <leader>h <C-w>h
+nnoremap <leader>l <C-w>l
+
+" end window movement and managment }}}
+
+"---Line numbers-------------------------------------------------------------{{{
 "turn hybrid line numbers on
 :set number relativenumber
 
@@ -170,15 +205,19 @@ autocmd!
 autocmd BufEnter,FocusGained,InsertLeave * set relativenumber
 autocmd BufLeave,FocusLost,InsertEnter   * set norelativenumber
 augroup END
-"line numbers }}}
+"end line numbers }}}
 
-"---Add shortcut to run python-------------------------------------------------------{{{
+"---Add shortcut to run Python----------------------------------------------{{{
 ":noremap <leader>r :w !python<Enter>
 noremap <C-b> :w !python<Enter>
 inoremap <C-b> <Esc>:w !python<Enter>
-" binding for python}}}
+"end binding for python}}}
 
-"---Copy Paste Undo like MS Windows----------------------------------------------------{{{
+"---MS Windows Compatibility Copy Paste Undo--------------------------------{{{
+"copy to windows clipboard in visual mode
+vnoremap <C-c> "*y
+vnoremap <C-v> "*p
+
 "paste from clipboard in insert mode then leave insert mode
 inoremap <C-v> <esc>"*p
 "paste from clipboard in normal mode
@@ -186,18 +225,15 @@ nnoremap <C-v> "*p
 "paste from clipboard in command mode
 cnoremap <C-v> <C-r>*
 
-"copy to windows clipboard in visual mode
-vnoremap <C-c> "*y
-vnoremap <C-v> "*p
-
 "make ctrl+z undo an action rather than freezing the console indefinitely for nvim
 "normal vim behaviour for ctrl+z would be to put the process in the background
 "and show the terminal that it was run from
 noremap <C-z> u
-"MS Windows compatibility}}}
+inoremap <C-z> <Esc>ui
+"end MS Windows compatibility Copy Paste Undo }}}
 
-"---Mode colours-----------------------------------------------------------------------{{{
-"change the background color to indicate current mode
+"---Mode colors-------------------------------------------------------------{{{
+"change the background color/colour to indicate current mode
 "
 let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 set t_Co=256
@@ -213,9 +249,9 @@ au InsertLeave * highlight Normal guibg=#1d2021
 "au InsertLeave * highlight Normal guifg=#FFFFFF guibg=#101050
 
 syntax enable
-"mode colors }}}
+"end mode colors }}}
 
-"---Plugin Help Tags--------------------------------------------------------------------{{{
+"---Plugin Help Tags--------------------------------------------------------{{{
 "Put these lines at the very end of your vimrc file.
 
 "Load all plugins now.
@@ -224,7 +260,7 @@ packloadall
 "Load all of the helptags now, after plugins have been loaded.
 "All messages and errors will be ignored.
 silent! helptags ALL
-"Plugin help tags}}}
+"end Plugin help tags}}}
 
 set modelines=1
 " vim:foldmethod=marker:foldlevel=0
