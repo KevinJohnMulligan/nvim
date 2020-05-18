@@ -4,7 +4,7 @@
 "       \ V /| | | | | | | | | (__
 "        \_/ |_|_| |_| |_|_|  \___|
 
-"       comments are to read as 'if this line is active it will (comment)'
+"       comments are to read as, 'if this line is active it will {comment}'
 
 "---Plugins-----------------------------------------------------------------{{{
 
@@ -40,11 +40,19 @@ Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 "automatically open popup suggestion list as oposed to Ctrl-p to invoke list
 Plug 'vim-scripts/AutoComplPop'
+"get a start up page like Spacevim
+Plug 'mhinz/vim-startify'
+"get a help which-key like Spacevim (originally from emacs)
+Plug 'liuchengxu/vim-which-key'
 " Initialize plugin system
 call plug#end()
 " }}}
 
 "---General Settings--------------------------------------------------------{{{
+"---Set the Leader key-------------------------------------------------------{{{
+map <SPACE> <Leader>
+" end set the leader }}}
+
 "quickly reload this configuration file nm: source my vimrc file 
 nnoremap <Leader>sv :so $MYVIMRC<CR>
 
@@ -55,7 +63,7 @@ nnoremap <Leader>ev :90vsplit $MYVIMRC/../.vim/config.vim<CR>
 nnoremap <Leader>en :90vsplit $VIMNOTES<CR>
 
 "toggle [a]ll folds in the file
-nnoremap <leader>a :call FoldLevelToggle()<cr>
+nnoremap <Leader>a :call FoldLevelToggle()<cr>
 
 function! FoldLevelToggle()
     if &foldlevel
@@ -77,10 +85,22 @@ vnoremap <C-e> $
 "Enter turns off the highlight of the previous search
 nnoremap <CR> :noh<CR><CR>:<backspace>
 
+"set ctags/tags directory to inside .git/ folder or in the current directory
+set tags=./.git/tags,tags
+
+"show at least 2 lines before the top or bottom of the screen when scrolling
+set scrolloff=2
+
+"set the colorscheme background to dark
 set background=dark
+
+"set the encoding of all files to utf-8 (this helps with Mandarin compatibility)
+"note: this sometimes causes an error that can be fixed by simply restarting
 set encoding=utf-8
 set termencoding=utf-8
 set fileencoding=utf-8
+
+"set the title of the program window, add the current directory
 set title
 augroup dirchange
     autocmd!
@@ -95,13 +115,26 @@ set colorcolumn=81
 "gV highlights last inserted text
 nnoremap gV `[v`]
 
-"autocomplete settings------------------------------------------------------{{{
-"look up words from the English dictionary upon pressing Ctrl-p
+let g:startify_custom_header = [
+	\ '    _/      _/                      _/      _/  _/              ',
+	\ '   _/_/    _/    _/_/      _/_/    _/      _/      _/_/_/  _/_/ ',
+	\ '  _/  _/  _/  _/_/_/_/  _/    _/  _/      _/  _/  _/    _/    _/',
+	\ ' _/    _/_/  _/        _/    _/    _/  _/    _/  _/    _/    _/ ',
+	\ '_/      _/    _/_/_/    _/_/        _/      _/  _/    _/    _/  '
+	\ ]
+
+"end general settings }}}
+
+"---Autocomplete Settings------------------------------------------------------{{{
+"look up words from the English dictionary upon pressing Ctrl-p in insert mode
 set complete+=kspell
+"when in insert, tab opens the autocomplete menu (standard is Ctrl-p)
+inoremap <Tab> <C-p> 
 
 "menuone shows even when there is only one selection
+set completeopt=menuone
 "longest inserts longest common match automatically
-set completeopt=menuone,longest
+set completeopt=longest
 "don't show the selection and list in the status bar
 "set menu=c
 
@@ -111,9 +144,6 @@ inoremap <expr> <Down> pumvisible() ? "<C-n>" : "<Down>"
 inoremap <expr> <Up> pumvisible() ? "<C-p>" : "<Up>"
 inoremap <expr> <S-tab> pumvisible() ? "<C-n>" : "<S-Tab>"
 
-"when in insert, tab opens the autocomplete menu (standard is Ctrl-p)
-inoremap <Tab> <C-p> 
-
 "select the complete menu items like Ctrl-y would
 inoremap <expr> <Right> pumvisible() ? "<C-y>" : "<Right>"
 inoremap <expr> <CR> pumvisible() ? "<C-y>" : "<CR>"
@@ -121,12 +151,6 @@ inoremap <expr> <CR> pumvisible() ? "<C-y>" : "<CR>"
 "cancel the complete menu like Ctrl-e would
 inoremap <expr> <Left> pumvisible() ? "<C-y>" : "<Left>"
 "end autocomplete settings }}}
-
-"end general settings }}}
-
-"---Set the Leader key-------------------------------------------------------{{{
-map <SPACE> <leader>
-" end set the leader }}}
 
 "---Plugin Settings----------------------------------------------------------{{{
 let g:gruvbox_italic = get(g:, 'gruvbox_italic', 0)
@@ -173,25 +197,26 @@ nmap <Leader>fh :FFHistory<CR>
 nmap <Leader>t :FFBTags<CR>
 nmap <Leader>T :FFTags<CR>
 
-"map <Leader>fcl 'find current line' to search for lines in current buffer
-nmap <Leader>fcl :FFBLines<CR>
+"map <Leader>fcl 'find current (line)' to search for lines in current buffer
+nmap <Leader>fc :FFBLines<CR>
 "map <Leader>fl 'find lines' to search for lines in loaded buffers
 nmap <Leader>fl :FFLines<CR>
 "map <Leader>' to search for marked lines
 nmap <Leader>' :FFMarks<CR>
+"map <Leader>f' to search for marked lines to show up in the WhichKey menu
+nmap <Leader>f' :FFMarks<CR>
 
 " fzf.vim }}}
 " plugins }}}
+"---Vim-Which-key
+let g:mapleader = "\<Space>"
+nnoremap <silent> <leader>      :<c-u>WhichKey '<Space>'<CR>
+" Define prefix dictionary
+let g:which_key_map =  {}
+let g:which_key_map.sv = 'source Vim config'
+let g:which_key_map.ev = 'edit Vim config'
+"end Vim-Which-Key
 
-"---Window movement and management-------------------------------------------{{{
-set splitbelow
-set splitright
-nnoremap <leader>j <C-w>j
-nnoremap <leader>k <C-w>k
-nnoremap <leader>h <C-w>h
-nnoremap <leader>l <C-w>l
-
-" end window movement and managment }}}
 
 "---Line numbers-------------------------------------------------------------{{{
 "turn hybrid line numbers on
@@ -234,16 +259,15 @@ inoremap <C-z> <Esc>ui
 
 "---Mode colors-------------------------------------------------------------{{{
 "change the background color/colour to indicate current mode
-"
+
 let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 set t_Co=256
-set background=dark
 au InsertEnter * highlight Normal guibg=#101030    
 au InsertLeave * highlight Normal guibg=#1d2021  
 
-""set starting colorscheme
+"set starting colorscheme
 "highlight Normal guibg=#101050 guifg=white
-""highlight Folded guibg=#222222 guifg=white
+"highlight Folded guibg=#222222 guifg=white
 "highlight Folded guibg=#007777 guifg=white
 "au InsertEnter * highlight Normal guifg=#DDDDFF guibg=#101030
 "au InsertLeave * highlight Normal guifg=#FFFFFF guibg=#101050
