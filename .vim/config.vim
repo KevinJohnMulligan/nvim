@@ -4,9 +4,9 @@
 "       \ V /| | | | | | | | | (__
 "        \_/ |_|_| |_| |_|_|  \___|
 
-"       comments are to read as, 'if this line is active it will {comment}'
+"       comments are to read as 'if this line is active it will {comment}'
 
-"---Plugins-----------------------------------------------------------------{{{
+"---Plugins----------------------------------------------------------------------------{{{
 
 "Note: To install these plugins type :PlugInstall
 call plug#begin('~\AppData\Local\nvim\plugged')
@@ -38,20 +38,16 @@ Plug 'klen/python-mode'
 "Plug 'ycm-core/YouCompleteMe'          
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
-"automatically open popup suggestion list as oposed to Ctrl-p to invoke list
-Plug 'vim-scripts/AutoComplPop'
 "get a start up page like Spacevim
 Plug 'mhinz/vim-startify'
-"get a help which-key like Spacevim (originally from emacs)
-Plug 'liuchengxu/vim-which-key'
 " Initialize plugin system
 call plug#end()
 " }}}
 
-"---General Settings--------------------------------------------------------{{{
-"---Set the Leader key-------------------------------------------------------{{{
-map <SPACE> <Leader>
-" end set the leader }}}
+"---General Settings-------------------------------------------------------------------{{{
+"---Set the Leader key-----------------------------------------------------------------{{{
+map <SPACE> <leader>
+"end set the leader }}}
 
 "quickly reload this configuration file nm: source my vimrc file 
 nnoremap <Leader>sv :so $MYVIMRC<CR>
@@ -82,9 +78,6 @@ nnoremap <C-e> $
 inoremap <C-e> <Esc>$a
 vnoremap <C-e> $
 
-"Enter turns off the highlight of the previous search
-nnoremap <CR> :noh<CR><CR>:<backspace>
-
 "set ctags/tags directory to inside .git/ folder or in the current directory
 set tags=./.git/tags,tags
 
@@ -109,6 +102,7 @@ augroup END
 
 "create fold using syntax cues
 set foldmethod=syntax
+
 "show a line in column 81 as a visual reminder to keep lines less than 80 char
 set colorcolumn=81
 
@@ -135,6 +129,7 @@ inoremap <Tab> <C-p>
 set completeopt=menuone
 "longest inserts longest common match automatically
 set completeopt=longest
+
 "don't show the selection and list in the status bar
 "set menu=c
 
@@ -144,15 +139,27 @@ inoremap <expr> <Down> pumvisible() ? "<C-n>" : "<Down>"
 inoremap <expr> <Up> pumvisible() ? "<C-p>" : "<Up>"
 inoremap <expr> <S-tab> pumvisible() ? "<C-n>" : "<S-Tab>"
 
+"when in insert, tab opens the autocomplete menu (standard is Ctrl-p)
+inoremap <Tab> <C-p> 
+
 "select the complete menu items like Ctrl-y would
 inoremap <expr> <Right> pumvisible() ? "<C-y>" : "<Right>"
 inoremap <expr> <CR> pumvisible() ? "<C-y>" : "<CR>"
-
 "cancel the complete menu like Ctrl-e would
 inoremap <expr> <Left> pumvisible() ? "<C-y>" : "<Left>"
 "end autocomplete settings }}}
 
-"---Plugin Settings----------------------------------------------------------{{{
+"---Window movement and management-----------------------------------------------------{{{
+set splitbelow
+set splitright
+nnoremap <leader>j <C-w>j
+nnoremap <leader>k <C-w>k
+nnoremap <leader>h <C-w>h
+nnoremap <leader>l <C-w>l
+
+" window movement and managment }}}
+
+"---Plugin Settings--------------------------------------------------------------------{{{
 let g:gruvbox_italic = get(g:, 'gruvbox_italic', 0)
 colorscheme gruvbox
 "always show signs in ALE
@@ -197,28 +204,17 @@ nmap <Leader>fh :FFHistory<CR>
 nmap <Leader>t :FFBTags<CR>
 nmap <Leader>T :FFTags<CR>
 
-"map <Leader>fcl 'find current (line)' to search for lines in current buffer
-nmap <Leader>fc :FFBLines<CR>
+"map <Leader>fcl 'find current line' to search for lines in current buffer
+nmap <Leader>fcl :FFBLines<CR>
 "map <Leader>fl 'find lines' to search for lines in loaded buffers
 nmap <Leader>fl :FFLines<CR>
 "map <Leader>' to search for marked lines
 nmap <Leader>' :FFMarks<CR>
-"map <Leader>f' to search for marked lines to show up in the WhichKey menu
-nmap <Leader>f' :FFMarks<CR>
 
 " fzf.vim }}}
 " plugins }}}
-"---Vim-Which-key
-let g:mapleader = "\<Space>"
-nnoremap <silent> <leader>      :<c-u>WhichKey '<Space>'<CR>
-" Define prefix dictionary
-let g:which_key_map =  {}
-let g:which_key_map.sv = 'source Vim config'
-let g:which_key_map.ev = 'edit Vim config'
-"end Vim-Which-Key
 
-
-"---Line numbers-------------------------------------------------------------{{{
+"---Line numbers-----------------------------------------------------------------------{{{
 "turn hybrid line numbers on
 :set number relativenumber
 
@@ -230,19 +226,15 @@ autocmd!
 autocmd BufEnter,FocusGained,InsertLeave * set relativenumber
 autocmd BufLeave,FocusLost,InsertEnter   * set norelativenumber
 augroup END
-"end line numbers }}}
+"line numbers }}}
 
-"---Add shortcut to run Python----------------------------------------------{{{
+"---Add shortcut to run python-------------------------------------------------------{{{
 ":noremap <leader>r :w !python<Enter>
 noremap <C-b> :w !python<Enter>
 inoremap <C-b> <Esc>:w !python<Enter>
-"end binding for python}}}
+" binding for python}}}
 
-"---MS Windows Compatibility Copy Paste Undo--------------------------------{{{
-"copy to windows clipboard in visual mode
-vnoremap <C-c> "*y
-vnoremap <C-v> "*p
-
+"---Copy Paste Undo like MS Windows----------------------------------------------------{{{
 "paste from clipboard in insert mode then leave insert mode
 inoremap <C-v> <esc>"*p
 "paste from clipboard in normal mode
@@ -250,32 +242,39 @@ nnoremap <C-v> "*p
 "paste from clipboard in command mode
 cnoremap <C-v> <C-r>*
 
+"copy to windows clipboard in visual mode
+vnoremap <C-c> "*y
+vnoremap <C-v> "*p
+
 "make ctrl+z undo an action rather than freezing the console indefinitely for nvim
 "normal vim behaviour for ctrl+z would be to put the process in the background
 "and show the terminal that it was run from
 noremap <C-z> u
+"undo a change then return to insert mode
 inoremap <C-z> <Esc>ui
-"end MS Windows compatibility Copy Paste Undo }}}
 
-"---Mode colors-------------------------------------------------------------{{{
-"change the background color/colour to indicate current mode
+"MS Windows compatibility}}}
 
+"---Mode colours-----------------------------------------------------------------------{{{
+"change the background color to indicate current mode
+"
 let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 set t_Co=256
+set background=dark
 au InsertEnter * highlight Normal guibg=#101030    
 au InsertLeave * highlight Normal guibg=#1d2021  
 
-"set starting colorscheme
+""set starting colorscheme
 "highlight Normal guibg=#101050 guifg=white
-"highlight Folded guibg=#222222 guifg=white
+""highlight Folded guibg=#222222 guifg=white
 "highlight Folded guibg=#007777 guifg=white
 "au InsertEnter * highlight Normal guifg=#DDDDFF guibg=#101030
 "au InsertLeave * highlight Normal guifg=#FFFFFF guibg=#101050
 
 syntax enable
-"end mode colors }}}
+"mode colors }}}
 
-"---Plugin Help Tags--------------------------------------------------------{{{
+"---Plugin Help Tags--------------------------------------------------------------------{{{
 "Put these lines at the very end of your vimrc file.
 
 "Load all plugins now.
@@ -284,7 +283,7 @@ packloadall
 "Load all of the helptags now, after plugins have been loaded.
 "All messages and errors will be ignored.
 silent! helptags ALL
-"end Plugin help tags}}}
+"Plugin help tags}}}
 
 set modelines=1
 " vim:foldmethod=marker:foldlevel=0
