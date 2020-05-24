@@ -1,9 +1,6 @@
 .netrwhist
 .vim/config.vimbackup
-README.md
 autoload/
-init.vim
 journal/
-onivim key.txt
 plugged/
-spell/
+onivim key.txt
