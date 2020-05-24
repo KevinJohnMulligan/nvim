@@ -1,8 +1,5 @@
 .netrwhist
 .vim/config.vimbackup
-.vim/hardmode.vim
-.vim/mswin.vim.txt
-.vim/statusline.vim
 README.md
 autoload/
 init.vim
