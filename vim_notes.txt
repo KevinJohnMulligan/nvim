@@ -1,0 +1,1 @@
+Try vimdiff to compare files like Beyond-Compare but in vim
