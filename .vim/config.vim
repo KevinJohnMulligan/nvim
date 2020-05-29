@@ -18,6 +18,8 @@ Plug 'tpope/vim-surround'
 Plug 'tpope/vim-commentary'             
 "20 bindings providing useful functionality
 Plug 'tpope/vim-unimpaired'             
+"git integration
+Plug 'tpope/vim-fugitive'             
 "use a search, select (by typing),and jump methodology
 Plug 'easymotion/vim-easymotion'        
 "gruvbox is a colorscheme
@@ -50,16 +52,16 @@ map <SPACE> <leader>
 "end set the leader }}}
 
 "quickly reload this configuration file nm: source my vimrc file 
-nnoremap <Leader>sv :so $MYVIMRC<CR>
+silent nnoremap <Leader>sv :so $MYVIMRC<CR>
 
 "open vertical split that is 90 characters wide, roughly half a screen
 "quickly edit this configuration file nm: edit my vimrc file
-nnoremap <Leader>ev :90vsplit $MYVIMRC/../.vim/config.vim<CR>
+silent nnoremap <Leader>ev :90vsplit $MYVIMRC/../.vim/config.vim<CR>
 "quickly edit vim notes file nm: edit notes
-nnoremap <Leader>en :90vsplit $VIMNOTES<CR>
+silent nnoremap <Leader>en :90vsplit $VIMNOTES<CR>
 
 "toggle [a]ll folds in the file
-nnoremap <Leader>a :call FoldLevelToggle()<cr>
+silent nnoremap <Leader>a :call FoldLevelToggle()<cr>
 
 function! FoldLevelToggle()
     if &foldlevel
@@ -78,6 +80,9 @@ nnoremap <C-e> $
 inoremap <C-e> <Esc>$a
 vnoremap <C-e> $
 
+"go to the most recent command in the ex history when typing UP Rationale
+"looking at previous commands is common, so removing <s-;> to streamline the process
+nnoremap <Up> :<Up>
 "set ctags/tags directory to inside .git/ folder or in the current directory
 set tags=./.git/tags,tags
 
