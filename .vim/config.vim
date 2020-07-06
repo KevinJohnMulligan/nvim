@@ -42,6 +42,11 @@ Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 "get a start up page like Spacevim
 Plug 'mhinz/vim-startify'
+"restore recently closed windows (undo :quit action) in a stack
+"undo a :quit (reopen the last window you closed) <C-w>u window undo
+Plug 'AndrewRadev/undoquit.vim'
+"open urls in Chrome
+Plug 'henrik/vim-open-url'
 " Initialize plugin system
 call plug#end()
 " }}}
@@ -50,7 +55,12 @@ call plug#end()
 "---Set the Leader key-----------------------------------------------------------------{{{
 map <SPACE> <leader>
 "end set the leader }}}
+" let g:netrw_http_cmd = 'C:/Users/Kevin-Lenovo/AppData/Local/nvim/magicopen.bat'
 
+" let netrw_browsex_viewer='expl2.cmd'
+let g:netrw_nogx = get(g:, 'netrw_nogx', 1)
+nmap gx :OpenURL<CR>
+vmap gx :OpenURL<CR>
 "quickly reload this configuration file nm: source my vimrc file 
 silent nnoremap <Leader>sv :so $MYVIMRC<CR>
 
@@ -58,7 +68,7 @@ silent nnoremap <Leader>sv :so $MYVIMRC<CR>
 "quickly edit this configuration file nm: edit my vimrc file
 silent nnoremap <Leader>ev :90vsplit $MYVIMRC/../.vim/config.vim<CR>
 "quickly edit vim notes file nm: edit notes
-silent nnoremap <Leader>en :90vsplit $VIMNOTES<CR>
+silent nnoremap <Leader>en :90vsplit C:\Users\Kevin-Lenovo\Documents\Coding_Dev\Hacks_Customisations\vim\general_vim_ideas.md<CR>
 
 "toggle [a]ll folds in the file
 silent nnoremap <Leader>a :call FoldLevelToggle()<cr>
@@ -113,6 +123,8 @@ set colorcolumn=81
 
 "gV highlights last inserted text
 nnoremap gV `[v`]
+"highlight the current line
+set cursorline
 
 let g:startify_custom_header = [
     \ '    _/      _/                      _/      _/  _/              ',
