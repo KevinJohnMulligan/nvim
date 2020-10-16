@@ -46,7 +46,9 @@ Plug 'mhinz/vim-startify'
 "undo a :quit (reopen the last window you closed) <C-w>u window undo
 Plug 'AndrewRadev/undoquit.vim'
 "open urls in Chrome
-Plug 'henrik/vim-open-url'
+"Plug 'henrik/vim-open-url'
+" Distraction free writing
+Plug 'junegunn/goyo.vim'
 " Initialize plugin system
 call plug#end()
 " }}}
@@ -92,7 +94,8 @@ vnoremap <C-e> $
 
 "go to the most recent command in the ex history when typing UP Rationale
 "looking at previous commands is common, so removing <s-;> to streamline the process
-nnoremap <Up> :<Up>
+"nnoremap <Up> :<Up>
+
 "set ctags/tags directory to inside .git/ folder or in the current directory
 set tags=./.git/tags,tags
 
@@ -125,6 +128,10 @@ set colorcolumn=81
 nnoremap gV `[v`]
 "highlight the current line
 set cursorline
+"allow the cursor to move where there are no characters present 
+" this feature is great for Markdown tables
+set virtualedit=all
+
 
 let g:startify_custom_header = [
     \ '    _/      _/                      _/      _/  _/              ',
@@ -198,6 +205,32 @@ if has("persistent_undo")
     set undodir=$HOME."/.undodir"
     set undofile
 endif
+
+
+" -------- Goyo
+
+
+" quit with one :q
+function! s:goyo_enter()
+  let b:quitting = 0
+  let b:quitting_bang = 0
+  autocmd QuitPre <buffer> let b:quitting = 1
+  cabbrev <buffer> q! let b:quitting_bang = 1 <bar> q!
+endfunction
+
+function! s:goyo_leave()
+  " Quit Vim if this is the only remaining buffer
+  if b:quitting && len(filter(range(1, bufnr('$')), 'buflisted(v:val)')) == 1
+    if b:quitting_bang
+      qa!
+    else
+      qa
+    endif
+  endif
+endfunction
+
+autocmd! User GoyoEnter call <SID>goyo_enter()
+autocmd! User GoyoLeave call <SID>goyo_leave()
 
 "---FZF.vim  {{{
 "The quintessential fuzzy file finder 
