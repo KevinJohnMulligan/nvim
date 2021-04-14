@@ -25,3 +25,8 @@ Disables arrow keys to make it easier to unlearn inefficent habits that don't he
 
 **statusline.vim**
 Creates a statusline at the bottom of a file buffer.
+
+
+# Installation/setup
+
+First install plugins `:PlugInstall`

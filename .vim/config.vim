@@ -9,7 +9,8 @@
 "---Plugins----------------------------------------------------------------------------{{{
 
 "Note: To install these plugins type :PlugInstall
-call plug#begin('~\AppData\Local\nvim\plugged')
+"call plug#begin('~\AppData\Local\nvim\plugged')
+"begin vim-plug in OS specfic file called in init.vim
 "repeat tpope plugins using period .
 Plug 'tpope/vim-repeat'                 
 "add quotes or parenthesis around a selection
