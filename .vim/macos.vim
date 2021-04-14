@@ -1,1 +1,1 @@
-call plug#begin('XDG_DATA_HOME:-$HOME/.vim/plugged')
+call plug#begin('~/dotfiles/config/nvim/.vim/plugged')

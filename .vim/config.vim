@@ -23,8 +23,6 @@ Plug 'tpope/vim-unimpaired'
 Plug 'tpope/vim-fugitive'             
 "use a search, select (by typing),and jump methodology
 Plug 'easymotion/vim-easymotion'        
-"gruvbox is a colorscheme
-Plug 'morhetz/gruvbox'          
 "ALE is asynchronous linting - checking syntax
 Plug 'w0rp/ale'             
 "NERDTree is a 'gui' style directory explorer
@@ -50,6 +48,8 @@ Plug 'AndrewRadev/undoquit.vim'
 "Plug 'henrik/vim-open-url'
 " Distraction free writing
 Plug 'junegunn/goyo.vim'
+"gruvbox is a colorscheme
+Plug 'morhetz/gruvbox'          
 " Initialize plugin system
 call plug#end()
 " }}}
@@ -185,8 +185,8 @@ nnoremap <leader>l <C-w>l
 " window movement and managment }}}
 
 "---Plugin Settings--------------------------------------------------------------------{{{
-let g:gruvbox_italic = get(g:, 'gruvbox_italic', 0)
-colorscheme gruvbox
+"let g:gruvbox_italic = get(g:, 'gruvbox_italic', 0)
+"colorscheme gruvbox
 "always show signs in ALE
 let g:ale_sign_column_always = 1
 "always show hidden files and folders in NERDTree
@@ -203,7 +203,7 @@ let g:pymode_rope_lookup_project = 0    "stop pymode rope from hanging Neovim
 autocmd FileType python set colorcolumn=120
 nnoremap <F5> :UndotreeToggle<cr>
 if has("persistent_undo")
-    set undodir=$HOME."/.undodir"
+    set undodir=$HOME"/.undodir"
     set undofile
 endif
 

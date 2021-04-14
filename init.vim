@@ -22,22 +22,24 @@ set nocompatible        " Must be first line
  " Environment {
      " Basics {
          if WINDOWS()
-             source ~\AppData\Local\nvim\.vim\config.vim
-	     source ~\AppData\Local\nvim\.vim\statusline.vim
+             source .vim/windows.vim
+             source .vim/config.vim
+	     source .vim/statusline.vim
              "source ~\AppData\Local\nvim\.vim\hardmode.vim  			"remember to disable this at a later stage, especially q
 
          endif
 	"" Basics {
 	if LINUX()
-             source /mnt/c/Users/Kevin-Lenovo/AppData/Local/nvim/.vim/config.vim
-	     source /mnt/c/Users/Kevin-Lenovo/AppData/Local/nvim/.vim/statusline.vim
+ 	     source .vim/linux.vim
+             source .vim/config.vim
+	     source .vim/statusline.vim
              "source /mnt/c/Users/Kevin-Lenovo/AppData/Local/nvim/.vim/hardmode.vim  			"remember to disable this at a later stage, especially q
 
 	    endif
 	" }
 	"" Basics {
 	if OSX()
-             source ~/dotfiles/config/nvim/.vim/macos.vim
+	     source ~/dotfiles/config/nvim/.vim/macos.vim
              source ~/dotfiles/config/nvim/.vim/config.vim
 	     source ~/dotfiles/config/nvim/.vim/statusline.vim
              "source ~/dotfiles/nvim/nvim/.vim/hardmode.vim  			"remember to disable this at a later stage, especially q
