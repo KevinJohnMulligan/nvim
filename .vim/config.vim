@@ -97,6 +97,9 @@ vnoremap <C-e> $
 "looking at previous commands is common, so removing <s-;> to streamline the process
 "nnoremap <Up> :<Up>
 
+"Directory to store swap files.
+set dir=~/.cache/nvim 
+
 "set ctags/tags directory to inside .git/ folder or in the current directory
 set tags=./.git/tags,tags
 
